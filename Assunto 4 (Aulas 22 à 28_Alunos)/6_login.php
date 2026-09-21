@@ -16,8 +16,9 @@
         $anoNascimento = filter_input(INPUT_POST, 'ano_nascimento', FILTER_VALIDATE_INT);
         $anoAtual = (int) date('Y');
 
-        if ($nome === '' || $anoNascimento === false || $anoNascimento < 1900 || $anoNascimento > $anoAtual) {
-            $mensagem = '<p>Informe um nome e um ano de nascimento válido.</p>';
+        // Validação com ano mínimo de 18
+        if ($nome === '' || $anoNascimento === false || $anoNascimento < 18 || $anoNascimento > $anoAtual) {
+            $mensagem = '<p>Informe um nome e um ano de nascimento válido (a partir de 18).</p>';
         } else {
             $idade = $anoAtual - $anoNascimento;
             $nomeExibido = htmlspecialchars($nome, ENT_QUOTES, 'UTF-8');
@@ -32,7 +33,8 @@
                     $mensagem = "<p>Acesso permitido, {$nomeExibido}!</p>";
                 }
             } else {
-                $mensagem = "<p>Acesso negado, {$nomeExibido}!</p>";
+                // Mensagem informando que é menor de idade
+                $mensagem = "<p>Acesso negado, {$nomeExibido}! Você é menor de idade.</p>";
             }
         }
     }
@@ -43,7 +45,8 @@
         <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($nome, ENT_QUOTES, 'UTF-8') ?>" required>
 
         <label for="ano_nascimento">Ano de Nascimento:</label>
-        <input type="number" id="ano_nascimento" name="ano_nascimento" min="1900" max="<?= date('Y') ?>" value="<?= htmlspecialchars((string) $anoNascimento, ENT_QUOTES, 'UTF-8') ?>" required>
+        <!-- Mínimo alterado para 18 -->
+        <input type="number" id="ano_nascimento" name="ano_nascimento" min="18" max="<?= date('Y') ?>" value="<?= htmlspecialchars((string) $anoNascimento, ENT_QUOTES, 'UTF-8') ?>" required>
 
         <button type="submit">Verificar</button>
     </form>
