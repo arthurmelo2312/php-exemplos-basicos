@@ -40,17 +40,16 @@
         // Fecha o arquivo
         fclose($arquivo);
 
-        // Redireciona para a mesma página com um parâmetro de sucesso
-        header('Location: ' . $_GET['PHP_SELF'] . '?sucesso=1');
-        exit; // Encerra o script para evitar que o restante do código seja executado após o redirecionamento
-
+        // Redireciona para a própria página após o cadastro
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?sucesso=1');
+        exit;
+    }
      if (isset($_GET['sucesso'])) {
         // Mensagem de sucesso (Feedback visual para o usuário)
         echo"<p>Usuário cadastrado com sucesso!</p>";
 
-        // Atualiza a página após 5 segundos (Força a menssagem a sumir)
-        header('Refresh: 5; URL=' . $_GET['PHP_SELF']);
-     }
+        // Atualiza a página após 5 segundos (Força a mensagem sumir)
+        header('Refresh: 5, url= ' . $_SERVER['PHP_SELF']);
 
     }
     ?>

@@ -2,52 +2,48 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador de maioridade</title>
+    <title>Verificador de Maioridade</title>
 </head>
 <body>
-    <?php
-    $mensagem = '';
-    $nome = '';
-    $anoNascimento = '';
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nome = trim($_POST['nome'] ?? '');
-        $anoNascimento = filter_input(INPUT_POST, 'ano_nascimento', FILTER_VALIDATE_INT);
-        $anoAtual = (int) date('Y');
-
-        if ($nome === '' || $anoNascimento === false || $anoNascimento < 1900 || $anoNascimento > $anoAtual) {
-            $mensagem = '<p>Informe um nome e um ano de nascimento válido.</p>';
-        } else {
-            $idade = $anoAtual - $anoNascimento;
-            $nomeExibido = htmlspecialchars($nome, ENT_QUOTES, 'UTF-8');
-
-            if ($idade >= 18) {
-                $linha = $nome . ';' . $idade . PHP_EOL;
-
-                // Tenta salvar no arquivo
-                if (file_put_contents('log_acessos.txt', $linha, FILE_APPEND | LOCK_EX) === false) {
-                    $mensagem = '<p>Não foi possível salvar o acesso. Tente novamente.</p>';
-                } else {
-                    $mensagem = "<p>Acesso permitido, {$nomeExibido}!</p>";
-                }
-            } else {
-                $mensagem = "<p>Acesso negado, {$nomeExibido}!</p>";
-            }
-        }
-    }
-    ?>
-
     <form method="post" action="">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($nome, ENT_QUOTES, 'UTF-8') ?>" required>
+        <input type="text" name="nome" required><br>
 
         <label for="ano_nascimento">Ano de Nascimento:</label>
-        <input type="number" id="ano_nascimento" name="ano_nascimento" min="1900" max="<?= date('Y') ?>" value="<?= htmlspecialchars((string) $anoNascimento, ENT_QUOTES, 'UTF-8') ?>" required>
+        <input type="number" name="ano_nascimento" placeholder="AAAA" required><br>
 
         <button type="submit">Verificar</button>
     </form>
 
-    <?= $mensagem ?>
+  <?php
+    // Verifica se o formulário foi enviado com o método POST
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Recebe e armazena os dados do formulário
+        $nome = $_POST['nome'];
+        $ano_nascimento = (int)$_POST['ano_nascimento'];
+
+        // Calcula a idade subtraindo o ano de nascimento do ano atual
+        $idade = date('Y') - $ano_nascimento;
+
+        // Verifica se a idade é maior ou igual a 18
+        if ($idade >= 18) {
+            echo "<h2>Acesso permitido, $nome! Idade atual: $idade.</h2>";
+
+            // Abre o arquivo log_acessos.txt no modo de adição ('a')
+            $arquivo = fopen('log_acessos.txt', 'a');
+            // Monta a linha a ser salva no arquivo
+            $linha = "Nome: $nome, Idade: $idade\n";
+            // Escreve a linha no arquivo e o fecha
+            fwrite($arquivo, $linha);
+            fclose($arquivo);
+        } else {
+            // Exibe mensagem de acesso negado se for menor de idade
+            echo "<h2>Acesso negado, $nome! Idade atual: $idade.</h2>";
+        }
+
+        // Executa o refresh da página após 5 segundos para limpar a mensagem
+        echo '<meta http-equiv="refresh" content="5;url='.$_SERVER['PHP_SELF'].'">';
+    }
+    ?>
 </body>
 </html>

@@ -1,6 +1,9 @@
-Arthur;aa
-123;12
-Arthur;123
-Arthur;1234
-aaaaa;dsadada
-aaa;222
+Shakira;2000
+Sabrina;1000
+Pitty;500
+Dua Lipa;dudis3
+Dua Lipa;dudis3
+Simone;si35
+Simaria;maia25
+Ig;30
+Vanessa;55

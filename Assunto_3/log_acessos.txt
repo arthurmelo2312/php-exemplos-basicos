@@ -1,1 +1,4 @@
-Joao;36
+Nome: Shakira, Idade: 46
+Nome: Sabrina, Idade: 27
+Nome: Shakira, Idade: 46
+Nome: Shakira, Idade: 41
