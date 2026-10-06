@@ -27,7 +27,7 @@ Os arquivos que dependem de banco de dados (a partir do nº 9) esperam um banco 
 | 10a | `10a_desafio2.php` / `10a_desafio2.md` | **Desafio 2:** cadastro de produtos com validação e persistência no banco |
 | 11 | `11_listar.php` | Listagem de dados do banco (`SELECT`) |
 | 12 | `12_atualizar.php` | Atualização de registros via `id` na URL (`UPDATE`) |
-| 13 | `13_exclusao.php` | Exclusão de registros via `id` na URL (`DELETE`) |
+| 13 | `13_exclusao.php` | Exclusão de registros informando o `id` no formulário (`DELETE`) |
 | 14 | `14_upload.php` | Upload de arquivos/imagens |
 | 15a-15c | `15a_sistema.php`, `15b_restrita.php`, `15c_logout.php` | Sessões (`$_SESSION`), login, página restrita e logout |
 | 15d | `15d_login.php`, `15d_perfil.php`, `15d_logout.php` / `15d_desafio3.md` | **Desafio 3:** sessão personalizada (nome + cor de preferência) |
